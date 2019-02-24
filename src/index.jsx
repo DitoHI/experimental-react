@@ -3,54 +3,65 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import './index.css';
 
-function ShoppingList({ name }) {
+// function ShoppingList({ name }) {
+//   return (
+//     <div>
+//       <h1>
+//         Shopping List for
+//         { name }
+//       </h1>
+//       <ul>
+//         <li>Instagram</li>
+//         <li>WhatsApp</li>
+//         <li>Oculus</li>
+//       </ul>
+//     </div>
+//   );
+// }
+
+function Square(props) {
+  const { onClick, value } = props;
   return (
-    <div>
-      <h1>
-        Shopping List for
-        { name }
-      </h1>
-      <ul>
-        <li>Instagram</li>
-        <li>WhatsApp</li>
-        <li>Oculus</li>
-      </ul>
-    </div>
+    <button className="square" onClick={onClick}>
+      { value }
+    </button>
   );
 }
 
-class Square extends React.Component {
-  render() {
-    const { value, clicked } = this.props;
-    return (
-      <button
-        className="square"
-        onClick={() => clicked()}
-      >
-        { value }
-      </button>
-    );
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i += 1) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
   }
+  return null;
 }
-
-Square.propTypes = {
-  value: PropTypes.number.isRequired,
-  clicked: PropTypes.func.isRequired,
-};
 
 class Boards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
+      xIsNext: true,
     };
   }
 
   handleClick(i) {
-    const { squares } = this.state;
+    const { squares, xIsNext } = this.state;
     squares.slice();
-    squares[i] = 'X';
-    this.setState({ squares });
+    squares[i] = xIsNext ? 'X' : 'O';
+    this.setState({ squares, xIsNext: !xIsNext });
   }
 
   renderSquare(i) {
@@ -59,13 +70,21 @@ class Boards extends React.Component {
     return (
       <Square
         value={this.square}
-        clicked={() => this.handleClick(i)}
+        onClick={() => this.handleClick(i)}
       />
     );
   }
 
   render() {
-    const status = 'Next player: X';
+    const { squares, xIsNext } = this.state;
+    const winner = calculateWinner(squares);
+    let status;
+    if (winner) {
+      status = `Winner: ${winner}`;
+    }
+    else {
+      status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    }
     return (
       <div>
         <div className="status">{ status }</div>
