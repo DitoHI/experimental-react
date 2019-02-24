@@ -3,22 +3,6 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import './index.css';
 
-// function ShoppingList({ name }) {
-//   return (
-//     <div>
-//       <h1>
-//         Shopping List for
-//         { name }
-//       </h1>
-//       <ul>
-//         <li>Instagram</li>
-//         <li>WhatsApp</li>
-//         <li>Oculus</li>
-//       </ul>
-//     </div>
-//   );
-// }
-
 function Square(props) {
   const { onClick, value } = props;
   return (
