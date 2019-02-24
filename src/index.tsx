@@ -1,8 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import './index.css';
 
-function Square(props) {
+interface ISquareProps {
+  onClick: any;
+  value: string;
+}
+
+function Square(props: ISquareProps) {
   const { onClick, value } = props;
   return (
     <button className="square" onClick={onClick}>
@@ -11,7 +16,7 @@ function Square(props) {
   );
 }
 
-function calculateWinner(squares) {
+function calculateWinner(squares: string[]) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -31,13 +36,18 @@ function calculateWinner(squares) {
   return null;
 }
 
-class Boards extends React.Component {
-  renderSquare(i) {
+interface IBoardProps {
+  squares: string[];
+  onClick: any;
+}
+
+class Boards extends React.Component<IBoardProps, any> {
+  renderSquare(i: number) {
     const { squares, onClick } = this.props;
-    this.square = squares[i];
+    const square = squares[i];
     return (
       <Square
-        value={this.square}
+        value={square}
         onClick={() => onClick(i)}
       />
     );
@@ -66,8 +76,14 @@ class Boards extends React.Component {
   }
 }
 
-class Game extends React.Component {
-  constructor(props) {
+interface IGameState {
+  history: { squares: string[] }[];
+  stepNumber: number;
+  xIsNext: boolean;
+}
+
+class Game extends React.Component<{}, IGameState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       history: [{
@@ -78,7 +94,7 @@ class Game extends React.Component {
     };
   }
 
-  handleClick(i) {
+  handleClick(i: number) {
     const { stepNumber, xIsNext } = this.state;
     let { history } = this.state;
     history = history.slice(0, stepNumber + 1);
@@ -97,7 +113,7 @@ class Game extends React.Component {
     });
   }
 
-  jumpTo(step) {
+  jumpTo(step: number) {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
@@ -132,7 +148,7 @@ class Game extends React.Component {
           <div className="game-board">
             <Boards
               squares={current.squares}
-              onClick={i => this.handleClick(i)}
+              onClick={(i: number) => this.handleClick(i)}
             />
           </div>
           <div className="game-info">
