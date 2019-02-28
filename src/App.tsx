@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import Posts from './components/Posts';
 import Postform from './components/Postform';
-import {  } from 'react'
+import { Provider } from 'react-redux';
 import './App.css';
+import { applyMiddleware, createStore } from "redux";
+
+const store = createStore(() => [], [], applyMiddleware());
 
 export class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Postform />
-        <hr />
-        <Posts/>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <Postform/>
+          <hr/>
+          <Posts/>
+        </div>
+      </Provider>
     );
   }
 }
