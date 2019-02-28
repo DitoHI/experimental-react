@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './index.css';
+import { App } from './App';
 
 interface ISquareProps {
   onClick: any;
@@ -162,6 +163,6 @@ class Game extends React.Component<{}, IGameState> {
 }
 
 ReactDOM.render(
-  <Game />,
+  <App />,
   document.getElementById('root'),
 );
