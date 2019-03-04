@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchPosts } from "../actions/postAction";
+
+interface IProps {
+  fetchPosts: any
+  posts: []
+  newPost: {}
+}
 
 interface IState {
   posts: []
 }
 
-class Posts extends Component<{}, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      posts: []
+class Posts extends Component<IProps, IState> {
+  componentWillMount() {
+    this.props.fetchPosts();
+  }
+  
+  componentWillReceiveProps(nextProps: Readonly<IProps>) {
+    const posts = nextProps.posts as any[];
+    if (nextProps.newPost) {
+      posts.unshift(nextProps.newPost);
     }
   }
   
-  componentWillMount() {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(res => res.json())
-      .then(data => this.setState({ posts: data }));
-  }
-  
   render() {
-    const { posts } = this.state;
+    const { posts } = this.props;
     let newPosts = posts.slice();
     const postItems = newPosts.map((post: any) => {
       return (
@@ -39,4 +46,9 @@ class Posts extends Component<{}, IState> {
   }
 }
 
-export default Posts;
+const mapStateToProps = (state: any) => ({
+  posts: state.posts.items,
+  newPost: state.posts.item
+});
+
+export default connect(mapStateToProps, { fetchPosts })(Posts);
