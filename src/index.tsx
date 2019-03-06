@@ -2,6 +2,12 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './index.css';
 import { App } from './App';
+import Router from './experiments/Router';
+
+ReactDOM.render(
+  <Router />,
+  document.getElementById('root'),
+);
 
 interface ISquareProps {
   onClick: any;
@@ -161,8 +167,3 @@ class Game extends React.Component<{}, IGameState> {
     );
   }
 }
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root'),
-);

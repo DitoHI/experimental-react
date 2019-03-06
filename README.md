@@ -9,6 +9,7 @@
 ([Link 1](https://github.com/Microsoft/TypeScript-React-Conversion-Guide))
 ([Link 2](https://github.com/Microsoft/TypeScript-React-Starter)) *(finished)*
 3. [Redux](https://www.youtube.com/watch?v=93p3LxR9xfM&t=1793s) *(finished)*
+4. [react-router](https://www.youtube.com/watch?v=91F8reC8kvo) *(finished)*
 
 #### Road Map Note :
 ##### Redux
